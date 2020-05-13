@@ -37,7 +37,7 @@ This is the Open source of the paper <AnimeGAN: a novel lightweight GAN for phot
 |     glob     |                  -                 |
 |   argparse   |                  -                 |
 
-Usage:
+**Usage**:
 
 1. `Local`
 
@@ -71,7 +71,7 @@ a method for converting a single RGB-D input image into a 3D photo, i.e., a mult
 
 Other Python dependencies listed in `requirements.txt`, and will be auto installed while running `preparation.py`.
 
-Usage:
+**Usage**:
 
 1. `Local`
 
@@ -91,7 +91,9 @@ Usage:
 
     https://colab.research.google.com/drive/1VAFCN8Wh4DAY_HDcwI-miNIBomx_MZc5?usp=sharing
 
-    P.S. Massive memory is occupied during operation(grows with `-l`). `Higher memory` runtime helps if you are Colab Pro user.
+    P.S. Massive memory is occupied during operation(grows with `-l`). 
+    
+    `Higher memory` runtime helps if you are Colab Pro user.
 
 3. Description of Parameters
 
@@ -126,7 +128,7 @@ sudo ln -snf /usr/local/cuda-10.0 /usr/local/cuda
 # After that we can perform a complete compilation.
 ```
 
-Usage:
+**Usage**:
 
 1. `Local`
 
@@ -160,7 +162,7 @@ Original repository: [jantic/DeOldify](https://github.com/jantic/DeOldify)
 
 DeOldify is a Deep Learning based project for colorizing and restoring old images and video! We currently try the easiest way to colorize images using DeOldify, which is using SaaS service provided by DeepAI(**For Now**). You must sign up DeepAI.
 
-Usage:
+**Usage**:
 
 1. `Local`
 
