@@ -148,11 +148,11 @@ Usage:
 
 3. Description of Parameters
 
-    | params            | abbr.  | Description                                                                                                                                                                                                             |
-    |-------------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-    | --input_video     | -input | the input video name                                                                                                                                                                                                    |
-    | --time_step       | -ts    | set the frame multiplier,<br>0.5 corresponds to 2X,<br>0.25 corresponds to 4X,<br>and 0.125 corresponds to 8X.                                                                                                          |
-    | --high_resolution | -hr    | Default is False.<br>Pascal V100 (Colab) has not enough memory to run DAIN for the FHD video,<br>set -hr True to split a single frame into four blocks and process them separately in order to reduce GPU memory usage. |
+    | params            | abbr.  | Description                                                                                                                  |
+    |-------------------|--------|------------------------------------------------------------------------------------------------------------------------------|
+    | --input_video     | -input | The input video name.                                                                                                        |
+    | --time_step       | -ts    | Set the frame multiplier.<br>0.5 corresponds to 2X;<br>0.25 corresponds to 4X;<br>0.125 corresponds to 8X.                   |
+    | --high_resolution | -hr    | Default is False.<br>Set it to True when you handling FHD videos,<br>A frame-splitting process will reduce GPU memory usage. |
 
 ## DeOldify
 
