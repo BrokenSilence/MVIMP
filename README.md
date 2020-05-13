@@ -26,15 +26,16 @@ Original repository: [TachibanaYoshino/AnimeGAN](https://github.com/TachibanaYos
 
 This is the Open source of the paper <AnimeGAN: a novel lightweight GAN for photo animation>, which uses the GAN framwork to transform real-world photos into anime images.
 
-Requirements:
-- TensorFLow 1.15.2
-- CUDA 10.0(tested locally) / 10.1(colab)
-- Python 3.6.8(3.6+/3.7+/3.8+)
-- opencv
-- tqdm
-- numpy
-- glob
-- argparse
+|  Dependency  |               Version              |
+|:------------:|:----------------------------------:|
+|  TensorFLow  |               1.15.2               |
+| CUDA Toolkit | 10.0(tested locally) / 10.1(colab) |
+|    Python    |             3.6.8(3.6+)            |
+|    opencv    |                  -                 |
+|     tqdm     |                  -                 |
+|     numpy    |                  -                 |
+|     glob     |                  -                 |
+|   argparse   |                  -                 |
 
 Usage:
 
@@ -62,11 +63,13 @@ Original repository: [vt-vl-lab/3d-photo-inpainting](https://github.com/vt-vl-la
 
 a method for converting a single RGB-D input image into a 3D photo, i.e., a multi-layer representation for novel view synthesis that contains hallucinated color and depth structures in regions occluded in the original view. 
 
-Requirements:
-- PyTroch 1.5.0
-- CUDA 10.1(tested locally/colab)
-- Python 3.6.8(3.6+/3.7+/3.8+)
-- Other Python dependencies listed in requirements.txt (will be auto prepared through running `preparation.py`)
+|  Dependency  |           Version          |
+|:------------:|:--------------------------:|
+|    PyTroch   |            1.5.0           |
+| CUDA Toolkit | 10.1(tested locally/colab) |
+|    Python    |         3.6.8(3.6+)        |
+
+Other Python dependencies listed in `requirements.txt`, and will be auto installed while running `preparation.py`.
 
 Usage:
 
@@ -92,9 +95,11 @@ Usage:
 
 3. Description of Parameters
 
-   - `--fps`or`-f`: setup the FPS of output video.
-   - `--frames`or`-n`: setup the number of frames of output video.
-   - `--longer_side_len`or`-l`: set the longer side of output video(either height or width).
+    |       params      | abbr. |                        Description                       |
+    |:-----------------:|:-----:|:--------------------------------------------------------:|
+    |       --fps       |   -f  | The FPS of output video.                                 |
+    |      --frames     |   -n  | The number of frames of output video.                    |
+    | --longer_side_len |   -l  | The longer side of output video(either height or width). |
 
 ## DAIN
 
@@ -102,12 +107,12 @@ Original repository: [baowenbo/DAIN](https://github.com/baowenbo/DAIN)
 
 Depth-Aware video frame INterpolation (DAIN) model explicitly detect the occlusion by exploring the depth cue. We develop a depth-aware flow projection layer to synthesize intermediate flows that preferably sample closer objects than farther ones. 
 
-Requirements:
-- FFmpeg
-- PyTroch 1.4.0
-- CUDA 10.0(tested locally/colab)
-- Python 3.6.8(3.6+/3.7+/3.8+)
-- GCC 7.5 (Compiling PyTorch 1.4.0 extension files (.c/.cu))
+|  Dependency  |                        Version                        |
+|:------------:|:-----------------------------------------------------:|
+|    PyTroch   |                         1.4.0                         |
+| CUDA Toolkit |               10.0(tested locally/colab)              |
+|    Python    |                      3.6.8(3.6+)                      |
+|      GCC     | 7.5(Compiling PyTorch 1.4.0 extension files (.c/.cu)) |
 
 P.S. Make sure your virtual env has torch-1.4.0+cu100 and torchvision-0.5.0+cu100.
 You can use the following [command](https://github.com/baowenbo/DAIN/issues/44#issuecomment-624025613):
@@ -143,18 +148,17 @@ Usage:
 
 3. Description of Parameters
 
-   - `--input_video`or`-input`: set the input video name.
-   - `--time_step`or`-ts`: set the frame multiplier, 0.5 corresponds to 2X, 0.25 corresponds to 4X, and 0.125 corresponds to 8X.
-   - `--high_resolution`or`-hr`: Default is False. Pascal V100 has not enough memory to run DAIN for the FHD video, set `-hr` True to split a single frame into four blocks and process them separately in order to reduce GPU memory usage.
+    |       params      |  abbr. |                                                                                                         Description                                                                                                         |
+    |:-----------------:|:------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+    |   --input_video   | -input | the input video name                                                                                                                                                                                                        |
+    |    --time_step    |   -ts  | set the frame multiplier, <br>0.5 corresponds to 2X, <br>0.25 corresponds to 4X, <br>and 0.125 corresponds to 8X.                                                                                                           |
+    | --high_resolution |   -hr  | Default is False. <br>Pascal V100 (Colab) has not enough memory to run DAIN for the FHD video, <br>set `-hr` True to split a single frame into four blocks and process them separately in order to reduce GPU memory usage. |
 
 ## DeOldify
 
 Original repository: [jantic/DeOldify](https://github.com/jantic/DeOldify)
 
 DeOldify is a Deep Learning based project for colorizing and restoring old images and video! We currently try the easiest way to colorize images using DeOldify, which is using SaaS service provided by DeepAI(**For Now**). You must sign up DeepAI.
-
-Requirements:
-- None
 
 Usage:
 
@@ -172,7 +176,9 @@ Usage:
 
 2. Description of Parameters
 
-   - `--api_key`or`-key`: the API key of DeepAI, please sign up first.
+    |   params  | abbr. |                   Description                   |
+    |:---------:|:-----:|:-----------------------------------------------:|
+    | --api_key |  -key | the API key of DeepAI.<br>please sign up first. |
 
 # TODO
 - [x] Chinese Document
