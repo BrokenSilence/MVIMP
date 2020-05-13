@@ -95,11 +95,11 @@ Usage:
 
 3. Description of Parameters
 
-    |       params      | abbr. |                        Description                       |
-    |:-----------------:|:-----:|:--------------------------------------------------------:|
-    |       --fps       |   -f  | The FPS of output video.                                 |
-    |      --frames     |   -n  | The number of frames of output video.                    |
-    | --longer_side_len |   -l  | The longer side of output video(either height or width). |
+    | params            | abbr. | Description                                              |
+    |-------------------|-------|----------------------------------------------------------|
+    | --fps             | -f    | The FPS of output video.                                 |
+    | --frames          | -n    | The number of frames of output video.                    |
+    | --longer_side_len | -l    | The longer side of output video(either height or width). |
 
 ## DAIN
 
@@ -148,11 +148,11 @@ Usage:
 
 3. Description of Parameters
 
-    |       params      |  abbr. |                                                                                                         Description                                                                                                         |
-    |:-----------------:|:------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-    |   --input_video   | -input | the input video name                                                                                                                                                                                                        |
-    |    --time_step    |   -ts  | set the frame multiplier, <br>0.5 corresponds to 2X, <br>0.25 corresponds to 4X, <br>and 0.125 corresponds to 8X.                                                                                                           |
-    | --high_resolution |   -hr  | Default is False. <br>Pascal V100 (Colab) has not enough memory to run DAIN for the FHD video, <br>set `-hr` True to split a single frame into four blocks and process them separately in order to reduce GPU memory usage. |
+    | params            | abbr.  | Description                                                                                                                                                                                                             |
+    |-------------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | --input_video     | -input | the input video name                                                                                                                                                                                                    |
+    | --time_step       | -ts    | set the frame multiplier,<br>0.5 corresponds to 2X,<br>0.25 corresponds to 4X,<br>and 0.125 corresponds to 8X.                                                                                                          |
+    | --high_resolution | -hr    | Default is False.<br>Pascal V100 (Colab) has not enough memory to run DAIN for the FHD video,<br>set -hr True to split a single frame into four blocks and process them separately in order to reduce GPU memory usage. |
 
 ## DeOldify
 
@@ -176,9 +176,9 @@ Usage:
 
 2. Description of Parameters
 
-    |   params  | abbr. |                   Description                   |
-    |:---------:|:-----:|:-----------------------------------------------:|
-    | --api_key |  -key | the API key of DeepAI.<br>please sign up first. |
+    | params    | abbr. | Description                                     |
+    |-----------|-------|-------------------------------------------------|
+    | --api_key | -key  | the API key of DeepAI.<br>please sign up first. |
 
 # TODO
 - [x] Chinese Document
