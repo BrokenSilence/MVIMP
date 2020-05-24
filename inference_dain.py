@@ -50,7 +50,7 @@ if __name__ == "__main__":
     frame_num = frames_info(video_file_link)
     if frame_num < 2:
         raise FileNotFoundError(
-            "You need more than 2 frames in the video to generate insertion."
+            "Video File not found, or incompatible."
         )
     fps = fps_info(video_file_link)
     target_fps = float(fps) / args.time_step
