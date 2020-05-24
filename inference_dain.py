@@ -75,30 +75,6 @@ if __name__ == "__main__":
     )
 
     # STAGE 3: video post-processing
-    # Resize hotfix
-    # DAIN frames are a bit "shifted / smaller" compared to original input frames. This can partly be mitigated with resizing
-    # DAIN frames to the resolution +2px and cropping the result to the original resoultion with the starting point (1,1).
-    # Without this fix, DAIN tends to make "vibrating" output and it is pretty noticible with static elements like text.
-    # This hotfix tries to make such effects less visible for a smoother video playback. I do not know what DAINAPP
-    # uses as a fix for this problem, but the original does show such behaviour with the default test images. More advanced
-    # users can change the interpolation method. The methods cv2.INTER_CUBIC and cv2.INTER_LANCZOS4 are recommended.
-    # The current default value is cv2.INTER_LANCZOS4.
-    os.chdir(output_data_dir) 
-    try:
-      for filename in os.listdir(output_data_dir):
-        img = cv2.imread(os.path.join(output_data_dir,filename))
-        part_filename = os.path.splitext(filename)
-        if(part_filename[0].endswith('0')==False and part_filename[1].endswith('png')==True):
-          dimension = (img.shape[1]+2, img.shape[0]+2)
-          resized = cv2.resize(img, dimension, interpolation=cv2.INTER_LANCZOS4)
-          crop = resized[1:(dimension[1]-1), 1:(dimension[0]-1)]
-          cv2.imwrite(part_filename[0]+".png", crop)
-          print("Resizing: " + filename)
-    except:
-      print("ERROR: Resizing frames!")
-    else:
-      print("Success: Resizing Frames!") 
-    
     os.chdir(DAIN_PREFIX)
     clean_folder(input_data_dir)
     file_order(src=output_data_dir, dst=input_data_dir)
