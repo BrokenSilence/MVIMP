@@ -103,14 +103,14 @@ if __name__ == "__main__":
         video_fusion(
             src=input_data_dir + "/%10d.png",
             dst=os.path.join(output_data_dir, output_video_file),
-            fps=target_fps,
+            fps=args.input_video_fps,
             thread=4,
         )
     else:
         video_fusion(
             src=input_data_dir + "/%10d.png",
             dst=os.path.join(output_data_dir, output_video_file),
-            fps=args.input_video_fps,
+            fps=target_fps,
             thread=4,
         )
     
