@@ -38,6 +38,12 @@ def continue_frames_insertion_helper(input_dir: str, output_dir: str, time_step:
         
         #Fill in missing frames in Anime
         if args.anime_fill_frames:
+            if all_frames[num].endswith('_0.png'):
+                shutil.copy(
+                    os.path.join(input_dir, f"{all_frames[num]}"),
+                    os.path.join(output_dir, f"{all_frames[num].split('.')[0]}00.png"),
+                )
+                continue
             if all_frames[num].endswith('_1.png'):
                 time_step=0.5
                 print("--------Interpolating 1 Missing Frame--------")
@@ -50,7 +56,7 @@ def continue_frames_insertion_helper(input_dir: str, output_dir: str, time_step:
             if all_frames[num].endswith('_4.png'):
                 time_step=0.2
                 print("--------Interpolating 4 Missing Frames--------")
-        
+                
         begin_frame = os.path.join(input_dir, f"{all_frames[num]}")
         end_frame = os.path.join(input_dir, f"{all_frames[num+1]}")
         frames_insertion_helper(
