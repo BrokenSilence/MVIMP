@@ -35,6 +35,22 @@ def continue_frames_insertion_helper(input_dir: str, output_dir: str, time_step:
     all_frames.sort()
     frames_num = len(all_frames)
     for num in tqdm(range(frames_num - 1)):
+        
+        #Fill in missing frames in Anime
+        if args.anime_fill_frames:
+            if all_frames[num].endswith('_1.png'):
+                time_step=0.5
+                print("--------Interpolating 1 Missing Frame--------")
+            if all_frames[num].endswith('_2.png'):
+                time_step=0.33
+                print("--------Interpolating 2 Missing Frames--------")
+            if all_frames[num].endswith('_3.png'):
+                time_step=0.25
+                print("--------Interpolating 3 Missing Frames--------")
+            if all_frames[num].endswith('_4.png'):
+                time_step=0.2
+                print("--------Interpolating 4 Missing Frames--------")
+        
         begin_frame = os.path.join(input_dir, f"{all_frames[num]}")
         end_frame = os.path.join(input_dir, f"{all_frames[num+1]}")
         frames_insertion_helper(
