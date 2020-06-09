@@ -14,6 +14,13 @@ datasetNames = "Vimeo_90K_interp"  # datasets.__all__
 parser = argparse.ArgumentParser(description="Using custom DAIN configuration args.")
 
 parser.add_argument(
+        "--anime_fill_frames",
+        "-aff",
+        default=False,
+        type=bool,
+        help="Fill in only the missing frames",
+)
+parser.add_argument(
     "--high_resolution",
     "-hr",
     default=False,
