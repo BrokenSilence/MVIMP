@@ -97,9 +97,9 @@ if __name__ == "__main__":
     os.chdir(DAIN_PREFIX)
     clean_folder(input_data_dir)
     file_order(src=output_data_dir, dst=input_data_dir)
-    output_video_file = f"{args.input_video.split('.')[0]}-{target_fps}.{args.input_video.split('.')[1]}"
     
     if args.anime_fill_frames:
+        output_video_file = "output_anime.mp4"
         video_fusion(
             src=input_data_dir + "/%10d.png",
             dst=os.path.join(output_data_dir, output_video_file),
@@ -107,6 +107,7 @@ if __name__ == "__main__":
             thread=4,
         )
     else:
+        output_video_file = f"{args.input_video.split('.')[0]}-{target_fps}.{args.input_video.split('.')[1]}"
         video_fusion(
             src=input_data_dir + "/%10d.png",
             dst=os.path.join(output_data_dir, output_video_file),
