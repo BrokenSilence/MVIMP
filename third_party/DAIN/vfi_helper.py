@@ -97,14 +97,14 @@ def frames_insertion_helper(
     im_1 = np.transpose(im_1, (2, 0, 1)).astype("float32") / 255.0
 
     if not args.high_resolution:
-        y_0 = model_inference_helper(im_0, im_1)
+        y_0 = model_inference_helper(im_0, im_1, time_step)
     else:
         frames_num = int(1.0 / time_step) - 1
         y_0 = []
-        ym_0_0 = model_inference_helper(im_0[:, 0::2, 0::2], im_1[:, 0::2, 0::2])
-        ym_0_1 = model_inference_helper(im_0[:, 0::2, 1::2], im_1[:, 0::2, 1::2])
-        ym_1_0 = model_inference_helper(im_0[:, 1::2, 0::2], im_1[:, 1::2, 0::2])
-        ym_1_1 = model_inference_helper(im_0[:, 1::2, 1::2], im_1[:, 1::2, 1::2])
+        ym_0_0 = model_inference_helper(im_0[:, 0::2, 0::2], im_1[:, 0::2, 0::2], time_step)
+        ym_0_1 = model_inference_helper(im_0[:, 0::2, 1::2], im_1[:, 0::2, 1::2], time_step)
+        ym_1_0 = model_inference_helper(im_0[:, 1::2, 0::2], im_1[:, 1::2, 0::2], time_step)
+        ym_1_1 = model_inference_helper(im_0[:, 1::2, 1::2], im_1[:, 1::2, 1::2], time_step)
         for i in range(frames_num):
             y_0.append(np.zeros(shape=(h, w, c)))
             y_0[-1][0::2, 0::2, :] = ym_0_0[i]
@@ -130,7 +130,7 @@ def frames_insertion_helper(
     # print(f"************** current image {begin_frame} processed. **************")
 
 
-def model_inference_helper(x_0: np.array, x_1: np.array):
+def model_inference_helper(x_0: np.array, x_1: np.array, time_step: float):
     """ Input: x_0, x_1; Output: y_0 """
     x_0 = torch.from_numpy(x_0).type(args.dtype)
     x_1 = torch.from_numpy(x_1).type(args.dtype)
@@ -174,7 +174,15 @@ def model_inference_helper(x_0: np.array, x_1: np.array):
     x_1 = x_1.cuda()
 
     # y_s, offset, filter = model(torch.stack((X0, X1), dim=0))
-    y_s, _, _ = model(torch.stack((x_0, x_1), dim=0))
+    if time_step == 0.5:
+        y_s, _, _ = model_05(torch.stack((x_0, x_1), dim=0))
+    if time_step == 0.33:
+        y_s, _, _ = model_033(torch.stack((x_0, x_1), dim=0))
+    if time_step == 0.25:
+        y_s, _, _ = model_025(torch.stack((x_0, x_1), dim=0))
+    else:
+        y_s, _, _ = model_020(torch.stack((x_0, x_1), dim=0))
+
     y_0 = y_s[args.save_which]
 
     torch.cuda.empty_cache()
@@ -201,31 +209,116 @@ def model_inference_helper(x_0: np.array, x_1: np.array):
 
 
 if __name__ == "__main__":
-    model = DAIN_slowmotion(
+    # 0.5
+    model_05 = DAIN_slowmotion(
         channel=args.channels,
         filter_size=args.filter_size,
-        timestep=args.time_step,
+        timestep=0.5,
         training=False,
     )
-    model = model.cuda()
+    model_05 = model_05.cuda()
+
+    # load weight
+    if os.path.exists(args.SAVED_MODEL):
+        print("The model_05 weight is: " + args.SAVED_MODEL)
+        pretrained_dict = torch.load(args.SAVED_MODEL)
+
+        model_dict = model_05.state_dict()
+        # 1. filter out unnecessary keys
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+        # 2. overwrite entries in the existing state dict
+        model_dict.update(pretrained_dict)
+        # 3. load the new state dict
+        model_05.load_state_dict(model_dict)
+        # 4. release the pretrained dict for saving memory
+        pretrained_dict = []
+    else:
+        raise FileNotFoundError("We don't load any trained weights.")
+    model_05 = model_05.eval()  # deploy mode
+
+
+    # 0.33
+    model_033 = DAIN_slowmotion(
+        channel=args.channels,
+        filter_size=args.filter_size,
+        timestep=0.33,
+        training=False,
+    )
+    model_033 = model_033.cuda()
+
+    # load weight
+    if os.path.exists(args.SAVED_MODEL):
+        print("The model_033 weight is: " + args.SAVED_MODEL)
+        pretrained_dict = torch.load(args.SAVED_MODEL)
+
+        model_dict = model_033.state_dict()
+        # 1. filter out unnecessary keys
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+        # 2. overwrite entries in the existing state dict
+        model_dict.update(pretrained_dict)
+        # 3. load the new state dict
+        model_033.load_state_dict(model_dict)
+        # 4. release the pretrained dict for saving memory
+        pretrained_dict = []
+    else:
+        raise FileNotFoundError("We don't load any trained weights.")
+    model_033 = model_033.eval()  # deploy mode
+
+
+    # 0.25
+    model_025 = DAIN_slowmotion(
+        channel=args.channels,
+        filter_size=args.filter_size,
+        timestep=0.25,
+        training=False,
+    )
+    model_025 = model_025.cuda()
+
+    # load weight
+    if os.path.exists(args.SAVED_MODEL):
+        print("The model_025 weight is: " + args.SAVED_MODEL)
+        pretrained_dict = torch.load(args.SAVED_MODEL)
+
+        model_dict = model_025.state_dict()
+        # 1. filter out unnecessary keys
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+        # 2. overwrite entries in the existing state dict
+        model_dict.update(pretrained_dict)
+        # 3. load the new state dict
+        model_025.load_state_dict(model_dict)
+        # 4. release the pretrained dict for saving memory
+        pretrained_dict = []
+    else:
+        raise FileNotFoundError("We don't load any trained weights.")
+    model_025 = model_025.eval()  # deploy mode
+
+
+    # 0.20
+    model_020 = DAIN_slowmotion(
+        channel=args.channels,
+        filter_size=args.filter_size,
+        timestep=0.2,
+        training=False,
+    )
+    model_020 = model_020.cuda()
 
     # load weight
     if os.path.exists(args.SAVED_MODEL):
         print("The model weight is: " + args.SAVED_MODEL)
         pretrained_dict = torch.load(args.SAVED_MODEL)
 
-        model_dict = model.state_dict()
+        model_dict = model_020.state_dict()
         # 1. filter out unnecessary keys
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
         # 2. overwrite entries in the existing state dict
         model_dict.update(pretrained_dict)
         # 3. load the new state dict
-        model.load_state_dict(model_dict)
+        model_020.load_state_dict(model_dict)
         # 4. release the pretrained dict for saving memory
         pretrained_dict = []
     else:
         raise FileNotFoundError("We don't load any trained weights.")
-    model = model.eval()  # deploy mode
+    model_020 = model_020.eval()  # deploy mode
 
     # model inference
     with torch.no_grad():
